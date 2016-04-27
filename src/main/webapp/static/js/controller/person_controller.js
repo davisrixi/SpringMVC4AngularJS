@@ -24,8 +24,41 @@ App.controller('PersonController', ['$scope', 'PersonService', function($scope, 
 
     self.fetchAllPersons();
 
+    self.submit = function() {
+        if(self.person.id==null){
+            console.log('Saving New Person', self.person);
+            self.createPerson(self.person);
+        }else{
+            self.updatePerson(self.person, self.person.id);
+            console.log('Person updated with id ', self.person.id);
+        }
+        self.reset();
+    };
+
+    self.createPerson = function(person){
+        PersonService.createPerson(person)
+            .then(
+                self.fetchAllPersons,
+                function(errResponse){
+                    console.error('Error while creating Person.');
+                }
+            );
+    };
+
+    self.updatePerson = function(person, id){
+        PersonService.updatePerson(person, id)
+            .then(
+                self.fetchAllPersons,
+                function(errResponse){
+                    console.error('Error while updating Person.');
+                }
+            );
+    };
+
     self.reset = function(){
         self.person={id:null,name:'',lastName:'',email:'',age:''};
         $scope.myForm.$setPristine(); //reset Form
     };
+
+
 }]);

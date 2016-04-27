@@ -19,6 +19,30 @@ App.factory('PersonService', ['$http', '$q', function ($http, $q) {
                         return $q.reject(errResponse);
                     }
                 );
+        },
+        createPerson: function(person){
+            return $http.post('http://localhost:8080/SpringMVC4AngularJS/person/', person)
+                .then(
+                    function(response){
+                        return response.data;
+                    },
+                    function(errResponse){
+                        console.error('Error while creating person');
+                        return $q.reject(errResponse);
+                    }
+                );
+        },
+        updatePerson: function(person, id){
+            return $http.put('http://localhost:8080/SpringMVC4AngularJS/person/'+id, person)
+                .then(
+                    function(response){
+                        return response.data;
+                    },
+                    function(errResponse){
+                        console.error('Error while updating person');
+                        return $q.reject(errResponse);
+                    }
+                );
         }
     };
 }]);

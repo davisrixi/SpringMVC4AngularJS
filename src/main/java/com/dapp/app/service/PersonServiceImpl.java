@@ -19,7 +19,7 @@ public class PersonServiceImpl implements PersonService {
     private static List<Person> persons;
 
     static{
-        persons= populateDummyUsers();
+        persons= populateDummyPersons();
     }
 
 
@@ -28,8 +28,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public Person findByName(String name) {
-        return null;
-    }
+        for(Person person : persons){
+            if(person.getName().equalsIgnoreCase(name)){
+                return person;
+            }
+        }
+        return null;    }
 
     public void savePerson(Person person) {
         person.setId(counter.incrementAndGet());
@@ -53,14 +57,14 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public boolean isPersonExists(Person person) {
-        return false;
+        return findByName(person.getName())!=null;
     }
 
-    private static List<Person> populateDummyUsers(){
-        List<Person> users = new ArrayList<Person>();
-        users.add(new Person(counter.incrementAndGet(),"Sam", "Witwicky", "sam@abc.com",30));
-        users.add(new Person(counter.incrementAndGet(),"Karl", "Dawson", "sam@abc.com",30));
+    private static List<Person> populateDummyPersons(){
+        List<Person> persons = new ArrayList<Person>();
+        persons.add(new Person(counter.incrementAndGet(),"Sam", "Witwicky", "sam@abc.com",30));
+        persons.add(new Person(counter.incrementAndGet(),"Karl", "Dawson", "sam@abc.com",30));
 
-        return users;
+        return persons;
     }
 }
